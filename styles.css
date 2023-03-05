@@ -66,8 +66,15 @@ header {
 
 @media (max-width: 768px) {
   #root {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  #root {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
