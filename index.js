@@ -52,56 +52,6 @@ const newProducts = [
   ),
 ];
 
-// setting the products in the page
-let i = 0;
-document.getElementById("root").innerHTML = newProducts
-  .map((item) => {
-    let { id, image, name, price } = item;
-    return (
-      `
-    <div class="box">
-      <div class="img-box">
-        <img src=${image} class="image"/>
-      </div>
-      <div class="bottom">
-        <h4>${name}</h4>
-        <h2>$ ${price}</h2>` +
-      "<button class='add-to-cart' onclick='addToCart(" +
-      i++ +
-      ", this)'>Add to cart</button>" +
-      `<button onclick='viewProduct(${id})' class='view-product'>View product</button>
-      </div>
-    </div>`
-    );
-  })
-  .join("");
-
-function addToCart(item, button) {
-  const existingItem = cart.find(
-    (cartItem) => cartItem.id === newProducts[item].id
-  );
-  if (existingItem) {
-    button.innerHTML = "Remove from cart";
-    button.setAttribute("onclick", `removeFromCart(${item}, this)`);
-  } else {
-    cart.push({ ...newProducts[item] });
-    document.getElementById("count").innerHTML = cart.length;
-    localStorage.setItem("cart", JSON.stringify(cart));
-    button.innerHTML = "Remove from cart";
-    button.setAttribute("onclick", `removeFromCart(${item}, this)`);
-    displayCart();
-  }
-}
-
-function removeFromCart(item, button) {
-  cart = cart.filter((cartItem) => cartItem.id !== newProducts[item].id);
-  document.getElementById("count").innerHTML = cart.length;
-  localStorage.setItem("cart", JSON.stringify(cart));
-  button.innerHTML = "Add to cart";
-  button.setAttribute("onclick", `addToCart(${item}, this)`);
-  displayCart();
-}
-
 //handling cart
 let cartBtn = document.querySelector(".cart-btn");
 let cartMenu = document.querySelector(".cart-menu");
@@ -137,16 +87,75 @@ function displayCart() {
             <img src=${image} class="row-image" />
           </div>
           <p>${name}</p>
-          <h2>$ ${price}</h2>
+          <h2>$${price}</h2>
         </div>`;
       })
       .join("");
   }
 }
 
+// setting the products in the page
+
+document.getElementById("root").innerHTML = newProducts
+  .map((item) => {
+    let { id, image, name, price } = item;
+    let added_to_cart = cart.some((cartItem) => cartItem.id === id);
+    return (
+      `
+     <div class="box">
+      <div class="img-box">
+        <img src=${image} class="image"/>
+      </div>
+      <div class="bottom">
+        <h4>${name}</h4>
+        <h2>$ ${price}</h2>` +
+      `<button class='add-to-cart' onclick='addToCart(${id}, this)' ${
+        added_to_cart ? "style='display:none'" : ""
+      }>Add to cart</button>` +
+      "<button class='remove-from-cart' onclick='removeFromCart(" +
+      id +
+      ", this)' " +
+      (added_to_cart ? "" : "style='display:none'") +
+      ">Remove from cart</button>" +
+      `<button onclick='viewProduct(${id})' class='view-product'>View product</button>
+      </div>
+    </div>`
+    );
+  })
+  .join("");
+
+//Add to cart function
+function addToCart(item, button) {
+  const existingItem = cart.find(
+    (cartItem) => cartItem.id === newProducts[item].id
+  );
+  if (existingItem) {
+    button.innerHTML = "Remove from cart";
+    button.setAttribute("onclick", `removeFromCart(${item}, this)`);
+  } else {
+    cart.push({ ...newProducts[item] });
+    document.getElementById("count").innerHTML = cart.length;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    button.innerHTML = "Remove from cart";
+    button.setAttribute("onclick", `removeFromCart(${item}, this)`);
+    displayCart();
+  }
+}
+
+//Remove from cart function
+function removeFromCart(item, button) {
+  cart = cart.filter((cartItem) => cartItem.id !== newProducts[item].id);
+  document.getElementById("count").innerHTML = cart.length;
+  localStorage.setItem("cart", JSON.stringify(cart));
+  button.innerHTML = "Add to cart";
+  button.setAttribute("onclick", `addToCart(${item}, this)`);
+  displayCart();
+}
+
 // handling quick view modal
-function viewProduct(item, button) {
-  let { name, price, image } = newProducts[item];
+function viewProduct(item) {
+  let { id, name, price, image } = newProducts[item];
+  let added_to_cart = cart.some((cartItem) => cartItem.id === id);
   let modalContent =
     `
       <span class="close">&times;</span>
@@ -155,9 +164,14 @@ function viewProduct(item, button) {
         <div class="modal-details">
           <h2>${name}</h2>
           <p>Price: $${price}</p>` +
-    "<button class='add-to-cart' onclick='addToCart(" +
-    i++ +
-    ", this)'>Add to cart</button>" +
+    `<button class='add-to-cart' onclick='addToCart(${id}, this)' ${
+      added_to_cart ? "style='display:none'" : ""
+    }>Add to cart</button>` +
+    "<button class='remove-from-cart' onclick='removeFromCart(" +
+    id +
+    ", this)' " +
+    (added_to_cart ? "" : "style='display:none'") +
+    ">Remove from cart</button>" +
     "</div>" +
     "</div>";
   let modal = document.createElement("div");
@@ -168,6 +182,5 @@ function viewProduct(item, button) {
   modalClose.addEventListener("click", function () {
     modal.remove();
   });
-
   document.body.appendChild(modal);
 }

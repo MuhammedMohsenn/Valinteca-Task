@@ -72,7 +72,7 @@ header {
 }
 
 .cart-menu {
-  width: 40%;
+  width: 60%;
   border-radius: 5px;
   background-color: #eee;
   margin-left: 20px;
@@ -83,6 +83,37 @@ header {
   right: 0;
   top: 55px;
   z-index: 10;
+}
+
+.cart-item p {
+  margin: 0 7px;
+}
+
+@media (min-width: 992px) {
+  .cart-menu {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-menu {
+    width: 70%;
+  }
+}
+
+@media (max-width: 576px) {
+  .cart-menu {
+    width: 95%;
+  }
+  .cart-item p {
+    font-size: 12px;
+  }
+  .cart-item h2 {
+    font-size: 15px;
+  }
+  .foot h2 {
+    font-size: 15px;
+  }
 }
 
 .active {
@@ -106,6 +137,14 @@ header {
   padding: 10px 0px;
   margin: 20px 0px;
   border-top: 1px solid #333;
+}
+
+.foot h2 {
+  margin: 0px 15px;
+}
+
+.foot h3 {
+  margin: 0px 15px;
 }
 
 .box {
@@ -134,7 +173,7 @@ header {
 
 .bottom {
   width: 100%;
-  height: 110px;
+  height: auto;
   text-align: center;
   display: flex;
   justify-content: space-between;
@@ -157,6 +196,13 @@ button {
   cursor: pointer;
   color: white;
   margin: 5px 0;
+}
+
+@media (max-width: 576px) {
+  button {
+    padding: 7px 10px;
+    font-size: 11px;
+  }
 }
 
 button:hover {
@@ -192,9 +238,9 @@ button:hover {
 
 .modal {
   position: absolute;
-  top: 50%;
+  top: 75%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -60%);
   background-color: white;
   text-align: center;
   display: flex;
@@ -207,6 +253,16 @@ button:hover {
   width: 400px;
   height: auto;
   z-index: 11;
+}
+
+.modal-image {
+  width: 100%;
+}
+
+@media (max-width: 576px) {
+  .modal {
+    width: 70%;
+  }
 }
 
 .close {
@@ -226,153 +282,3 @@ button:hover {
   border-radius: 50%;
   cursor: pointer;
 }
-/* 
-.products {
-    padding: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.product {
-    border: 2px solid red;
-    text-align: center;
-    max-width: 400px;
-    padding: 15px;
-}
-
-.product-image {
-    width: 100%;
-    height: auto;
-}
-
-.add-to-cart-btn,
-.qv-btn {
-    border: none;
-    width: 100px;
-    height: 35px;
-    margin: 10px;
-    transition: all 0.3s;
-}
-
-.add-to-cart-btn:hover,
-.qv-btn:hover {
-    background-color: black;
-    color: white;
-} */
-/* 
-.container {
-  display: flex;
-  justify-content: center;
-}
-
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.product-card {
-  width: 300px;
-  margin: 20px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.product-card img {
-  width: 100%;
-  max-width: 200px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.add-to-cart-btn {
-  margin-top: auto;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.add-to-cart-btn.added {
-  background-color: #f44336;
-}
-
-.cart-icon {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-}
-
-.cart-count {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: white;
-  color: #4caf50;
-  font-size: 12px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cart-dropdown {
-  position: absolute;
-  top: 60px;
-  right: 0;
-  width: 300px;
-  max-height: 300px;
-  overflow-y: auto;
-  background-color: white;
-  border: 1px solid #ccc;
-  display: none;
-  z-index: 1;
-}
-
-.cart-dropdown .cart-items {
-  padding: 10px;
-}
-
-.cart-dropdown .cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #ccc;
-}
-
-.cart-dropdown .cart-item .cart-item-name {
-  font-weight: bold;
-}
-
-.cart-dropdown .clear-cart-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 500px;
-} */
