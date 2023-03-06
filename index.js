@@ -63,23 +63,23 @@ let cart = [];
 if (localStorage.getItem("cart")) {
   let existingItems = JSON.parse(localStorage.getItem("cart"));
   cart = existingItems;
-  document.getElementById("count").innerHTML = cart.length;
+  document.getElementById("count").textContent = cart.length;
   displayCart();
 }
 
 function displayCart() {
   let j = 0;
   total = 0;
-  document.getElementById("count").innerHTML = cart.length;
+  document.getElementById("count").textContent = cart.length;
   if (cart.length == 0) {
-    document.getElementById("cart-item").innerHTML = "Your cart is empty";
-    document.getElementById("total").innerHTML = "$ " + 0 + ".00";
+    document.getElementById("cart-item").textContent = "Your cart is empty";
+    document.getElementById("total").textContent = "$ " + 0 + ".00";
   } else {
     document.getElementById("cart-item").innerHTML = cart
       .map((item) => {
         let { image, name, price } = item;
         total = total + price;
-        document.getElementById("total").innerHTML = "$ " + total + "";
+        document.getElementById("total").textContent = "$ " + total + "";
 
         return `
         <div class="cart-item">
@@ -124,13 +124,13 @@ function addToCart(item, button) {
     (cartItem) => cartItem.id === newProducts[item].id
   );
   if (existingItem) {
-    button.innerHTML = "Remove from cart";
+    button.textContent = "Remove from cart";
     button.setAttribute("onclick", `removeFromCart(${item}, this)`);
   } else {
     cart.push({ ...newProducts[item] });
-    document.getElementById("count").innerHTML = cart.length;
+    document.getElementById("count").textContent = cart.length;
     localStorage.setItem("cart", JSON.stringify(cart));
-    button.innerHTML = "Remove from cart";
+    button.textContent = "Remove from cart";
     button.setAttribute("onclick", `removeFromCart(${item}, this)`);
     displayCart();
   }
@@ -139,9 +139,9 @@ function addToCart(item, button) {
 //Remove from cart function
 function removeFromCart(item, button) {
   cart = cart.filter((cartItem) => cartItem.id !== newProducts[item].id);
-  document.getElementById("count").innerHTML = cart.length;
+  document.getElementById("count").textContent = cart.length;
   localStorage.setItem("cart", JSON.stringify(cart));
-  button.innerHTML = "Add to cart";
+  button.textContent = "Add to cart";
   button.setAttribute("onclick", `addToCart(${item}, this)`);
   displayCart();
 }
