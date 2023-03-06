@@ -108,16 +108,10 @@ document.getElementById("root").innerHTML = newProducts
       </div>
       <div class="bottom">
         <h4>${name}</h4>
-        <h2>$ ${price}</h2>` +
-      `<button class='add-to-cart' onclick='addToCart(${id}, this)' ${
-        added_to_cart ? "style='display:none'" : ""
-      }>Add to cart</button>` +
-      "<button class='remove-from-cart' onclick='removeFromCart(" +
-      id +
-      ", this)' " +
-      (added_to_cart ? "" : "style='display:none'") +
-      ">Remove from cart</button>" +
-      `<button onclick='viewProduct(${id})' class='view-product'>View product</button>
+        <h2>$ ${price}</h2>
+        <button class='add-to-cart' onclick='addToCart(${id}, this)' ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
+        <button class='remove-from-cart' onclick='removeFromCart(${id}, this)' ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
+        <button onclick='viewProduct(${id})' class='view-product'>View product</button>
       </div>
     </div>`
     );
@@ -163,17 +157,11 @@ function viewProduct(item) {
         <img src="${image}" class="modal-image" />
         <div class="modal-details">
           <h2>${name}</h2>
-          <p>Price: $${price}</p>` +
-    `<button class='add-to-cart' onclick='addToCart(${id}, this)' ${
-      added_to_cart ? "style='display:none'" : ""
-    }>Add to cart</button>` +
-    "<button class='remove-from-cart' onclick='removeFromCart(" +
-    id +
-    ", this)' " +
-    (added_to_cart ? "" : "style='display:none'") +
-    ">Remove from cart</button>" +
-    "</div>" +
-    "</div>";
+          <p>Price: $${price}</p>
+          <button class='add-to-cart' onclick='addToCart(${id}, this)' ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
+          <button class='remove-from-cart' onclick='removeFromCart(${id}, this)' ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
+        </div>
+      </div>`;
   let modal = document.createElement("div");
   modal.classList.add("modal");
   modal.innerHTML = modalContent;
