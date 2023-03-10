@@ -13,6 +13,9 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 @media (max-width: 768px) {
@@ -51,6 +54,14 @@ header {
   background-color: #0563bb;
   color: white;
   border-radius: 22px;
+  cursor: pointer;
+}
+
+.del-btn {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
 .container {
@@ -92,9 +103,9 @@ header {
   padding: 15px;
   text-align: center;
   display: none;
-  position: absolute;
-  right: 0;
+  position: fixed;
   top: 55px;
+  right: 0;
   z-index: 10;
 }
 
@@ -122,10 +133,10 @@ header {
     font-size: 12px;
   }
   .cart-item h2 {
-    font-size: 15px;
+    font-size: 14px;
   }
   .foot h2 {
-    font-size: 15px;
+    font-size: 14px;
   }
 }
 
@@ -248,6 +259,16 @@ button:hover {
   max-width: 43px;
   max-height: 43px;
   border-radius: 50%;
+}
+
+.modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.34);
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* z-index: 15; */
 }
 
 .modal {

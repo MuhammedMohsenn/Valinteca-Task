@@ -1,4 +1,4 @@
-let products = [
+const products = [
   {
     id: 0,
     name: "Xiaomi airbuds",
@@ -53,8 +53,8 @@ const newProducts = [
 ];
 
 //handling cart
-let cartBtn = document.querySelector(".cart-btn");
-let cartMenu = document.querySelector(".cart-menu");
+const cartBtn = document.querySelector(".cart");
+const cartMenu = document.querySelector(".cart-menu");
 cartBtn.addEventListener("click", function () {
   cartMenu.classList.toggle("active");
 });
@@ -68,7 +68,6 @@ if (localStorage.getItem("cart")) {
 }
 
 function displayCart() {
-  let j = 0;
   total = 0;
   document.getElementById("count").textContent = cart.length;
   if (cart.length == 0) {
@@ -77,7 +76,7 @@ function displayCart() {
   } else {
     document.getElementById("cart-item").innerHTML = cart
       .map((item) => {
-        let { image, name, price } = item;
+        let { id, image, name, price } = item;
         total = total + price;
         document.getElementById("total").textContent = "$ " + total + "";
 
@@ -86,8 +85,13 @@ function displayCart() {
           <div class="row-img">
             <img src=${image} class="row-image" />
           </div>
-          <p>${name}</p>
-          <h2>$${price}</h2>
+          <div class="product-details">
+            <p>${name}</p>
+            <h2>$${price}</h2>
+          </div>
+          <div>
+            <p class="del-btn" onclick="removeFromCart(${id},this)">Remove</p>
+          </div>
         </div>`;
       })
       .join("");
@@ -158,17 +162,21 @@ function viewProduct(item) {
         <div class="modal-details">
           <h2>${name}</h2>
           <p>Price: $${price}</p>
-          <button class='add-to-cart' onclick='addToCart(${id}, this)' ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
-          <button class='remove-from-cart' onclick='removeFromCart(${id}, this)' ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
+          <button class='vp-add-to-cart' onclick='addToCart(${id}, this)' ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
+          <button class='vp-remove-from-cart' onclick='removeFromCart(${id}, this)' ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
         </div>
       </div>`;
   let modal = document.createElement("div");
   modal.classList.add("modal");
   modal.innerHTML = modalContent;
 
-  let modalClose = modal.querySelector(".close");
+  let modalOverlay = document.createElement("div");
+  modalOverlay.classList.add("modal-overlay");
+  modalOverlay.appendChild(modal);
+
+  const modalClose = modal.querySelector(".close");
   modalClose.addEventListener("click", function () {
-    modal.remove();
+    modalOverlay.remove();
   });
-  document.body.appendChild(modal);
-}
+  document.body.appendChild(modalOverlay);
+};
