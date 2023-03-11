@@ -137,6 +137,17 @@ function addToCart(item, button) {
     button.textContent = "Remove from cart";
     button.setAttribute("onclick", `removeFromCart(${item}, this)`);
     displayCart();
+
+    const itemCardBtn = document.querySelector(
+      `[data-product-id="${item}"]`
+    );
+    if(itemCardBtn.textContent = "Add to cart"){
+    itemCardBtn.textContent = "Remove from cart";
+    itemCardBtn.setAttribute("onclick", `removeFromCart(${item}, this)`);
+    }else if(itemCardBtn.textContent = "Remove from cart"){
+      itemCardBtn.textContent = "Add to cart";
+      itemCardBtn.setAttribute("onclick", `addToCart(${item}, this)`);
+      }
   }
 }
 
@@ -180,36 +191,6 @@ function viewProduct(item) {
   let modalOverlay = document.createElement("div");
   modalOverlay.classList.add("modal-overlay");
   modalOverlay.appendChild(modal);
-
-  window.addEventListener("click", (event) => {
-    if (event.target.classList.contains("vp-add-to-cart")) {
-      event.target.classList.remove("vp-add-to-cart");
-      event.target.classList.add("vp-remove-from-cart");
-
-      const productCardId = event.target.dataset.productId;
-      const productCardBtn = document.querySelector(
-        `[data-product-id="${productCardId}"]`
-      );
-
-      productCardBtn.textContent = "Remove from cart";
-      productCardBtn.classList.add("remove-from-cart");
-      productCardBtn.classList.remove("add-to-cart");
-      productCardBtn.setAttribute("onclick", `removeFromCart(${id}, this)`);
-    } else if (event.target.classList.contains("vp-remove-from-cart")) {
-      event.target.classList.remove("vp-remove-from-cart");
-      event.target.classList.add("vp-add-to-cart");
-
-      const productCardId = event.target.dataset.productId;
-      const productCardBtn = document.querySelector(
-        `[data-product-id="${productCardId}"]`
-      );
-
-      productCardBtn.textContent = "Add to cart";
-      productCardBtn.classList.add("add-to-cart");
-      productCardBtn.classList.remove("remove-from-cart");
-      productCardBtn.setAttribute("onclick", `addToCart(${id}, this)`);
-    }
-  });
 
   const modalClose = modal.querySelector(".close");
   modalClose.addEventListener("click", function () {
