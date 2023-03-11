@@ -81,7 +81,7 @@ function displayCart() {
         document.getElementById("total").textContent = "$ " + total + "";
 
         return `
-        <div class="cart-item">
+        <div class="cart-item" data-product-id=${id}>
           <div class="row-img">
             <img src=${image} class="row-image" />
           </div>
@@ -96,7 +96,7 @@ function displayCart() {
       })
       .join("");
   }
-}
+};
 
 // setting the products in the page
 
@@ -113,8 +113,8 @@ document.getElementById("root").innerHTML = newProducts
       <div class="bottom">
         <h4>${name}</h4>
         <h2>$ ${price}</h2>
-        <button class='add-to-cart' onclick='addToCart(${id}, this)' ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
-        <button class='remove-from-cart' onclick='removeFromCart(${id}, this)' ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
+        <button class='add-to-cart' onclick='addToCart(${id}, this)' data-product-id=${id} ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
+        <button class='remove-from-cart' onclick='removeFromCart(${id}, this)' data-product-id=${id} ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
         <button onclick='viewProduct(${id})' class='view-product'>View product</button>
       </div>
     </div>`
@@ -148,6 +148,13 @@ function removeFromCart(item, button) {
   button.textContent = "Add to cart";
   button.setAttribute("onclick", `addToCart(${item}, this)`);
   displayCart();
+  const itemCardBtn = document.querySelector(
+    `[data-product-id="${item}"]`
+  );
+  if(itemCardBtn.textContent = "Remove from cart"){
+  itemCardBtn.textContent = "Add to cart";
+  itemCardBtn.setAttribute("onclick", `addToCart(${item}, this)`);
+  }
 }
 
 // handling quick view modal
@@ -162,8 +169,8 @@ function viewProduct(item) {
         <div class="modal-details">
           <h2>${name}</h2>
           <p>Price: $${price}</p>
-          <button class='vp-add-to-cart' onclick='addToCart(${id}, this)' ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
-          <button class='vp-remove-from-cart' onclick='removeFromCart(${id}, this)' ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
+          <button class='vp-add-to-cart' onclick='addToCart(${id}, this)' data-product-id=${id} ${added_to_cart ? "style='display:none'" : ""}>Add to cart</button>
+          <button class='vp-remove-from-cart' onclick='removeFromCart(${id}, this)' data-product-id=${id} ${added_to_cart ? "" : "style='display:none'"}>Remove from cart</button>
         </div>
       </div>`;
   let modal = document.createElement("div");
@@ -173,6 +180,36 @@ function viewProduct(item) {
   let modalOverlay = document.createElement("div");
   modalOverlay.classList.add("modal-overlay");
   modalOverlay.appendChild(modal);
+
+  window.addEventListener("click", (event) => {
+    if (event.target.classList.contains("vp-add-to-cart")) {
+      event.target.classList.remove("vp-add-to-cart");
+      event.target.classList.add("vp-remove-from-cart");
+
+      const productCardId = event.target.dataset.productId;
+      const productCardBtn = document.querySelector(
+        `[data-product-id="${productCardId}"]`
+      );
+
+      productCardBtn.textContent = "Remove from cart";
+      productCardBtn.classList.add("remove-from-cart");
+      productCardBtn.classList.remove("add-to-cart");
+      productCardBtn.setAttribute("onclick", `removeFromCart(${id}, this)`);
+    } else if (event.target.classList.contains("vp-remove-from-cart")) {
+      event.target.classList.remove("vp-remove-from-cart");
+      event.target.classList.add("vp-add-to-cart");
+
+      const productCardId = event.target.dataset.productId;
+      const productCardBtn = document.querySelector(
+        `[data-product-id="${productCardId}"]`
+      );
+
+      productCardBtn.textContent = "Add to cart";
+      productCardBtn.classList.add("add-to-cart");
+      productCardBtn.classList.remove("remove-from-cart");
+      productCardBtn.setAttribute("onclick", `addToCart(${id}, this)`);
+    }
+  });
 
   const modalClose = modal.querySelector(".close");
   modalClose.addEventListener("click", function () {
